@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +32,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.pbn.R
@@ -63,7 +63,7 @@ fun LoginPage(doOnRegisterClick: () -> Unit, doOnLoginClick: () -> Unit = {}) {
         )
         Text(
             modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_16)),
-            text = "Masuk",
+            text = stringResource(R.string.masuk),
             fontSize = dimensionResource(id = R.dimen.font_20).value.sp,
             fontWeight = FontWeight.Bold
         )
@@ -78,7 +78,7 @@ fun LoginPage(doOnRegisterClick: () -> Unit, doOnLoginClick: () -> Unit = {}) {
             shape = RoundedCornerShape(30),
             value = username,
             onValueChange = { username = it },
-            label = { Text("Nama Pengguna") }
+            label = { Text(stringResource(R.string.user_name)) }
         )
         OutlinedTextField(
             modifier = Modifier
@@ -91,7 +91,7 @@ fun LoginPage(doOnRegisterClick: () -> Unit, doOnLoginClick: () -> Unit = {}) {
             shape = RoundedCornerShape(30),
             value = password,
             onValueChange = { password = it },
-            label = { Text("Kata Sandi") },
+            label = { Text(stringResource(R.string.pasword)) },
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
@@ -109,7 +109,7 @@ fun LoginPage(doOnRegisterClick: () -> Unit, doOnLoginClick: () -> Unit = {}) {
         )
 
         ButtonPrimary(
-            "Masuk",
+            stringResource(R.string.masuk),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
@@ -123,7 +123,7 @@ fun LoginPage(doOnRegisterClick: () -> Unit, doOnLoginClick: () -> Unit = {}) {
             doOnLoginClick.invoke()
         }
         val annotatedText = buildAnnotatedString {
-            append("Belum memiliki akun ? ")
+            append(stringResource(R.string.belum_memiliki_akun))
             pushStringAnnotation(
                 tag = Util.PAGE,
                 annotation = "https://developer.android.com"
@@ -134,7 +134,7 @@ fun LoginPage(doOnRegisterClick: () -> Unit, doOnLoginClick: () -> Unit = {}) {
                     fontWeight = FontWeight.Bold
                 )
             ) {
-                append("Daftar Sekarang")
+                append(stringResource(R.string.daftar_sekarang))
             }
             pop()
         }
@@ -151,8 +151,7 @@ fun LoginPage(doOnRegisterClick: () -> Unit, doOnLoginClick: () -> Unit = {}) {
                     tag = Util.PAGE,
                     start = offset,
                     end = offset
-                ).firstOrNull()?.let { annotation ->
-//                    Toast.makeText(context, annotation.item, Toast.LENGTH_SHORT).show()
+                ).firstOrNull()?.let { _ ->
                     doOnRegisterClick.invoke()
                 }
             },

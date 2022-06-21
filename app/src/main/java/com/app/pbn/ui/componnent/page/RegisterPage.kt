@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -31,7 +32,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.pbn.R
@@ -46,7 +46,7 @@ fun RegisterPage(doOnLoginClick: () -> Unit, doOnRegisterClick: () -> Unit) {
     var password by remember { mutableStateOf("") }
     var repeatPassword by remember { mutableStateOf("") }
     var passwordVisibility by remember { mutableStateOf(false) }
-    var repeatpasswordVisibility by remember { mutableStateOf(false) }
+    var repeatPasswordVisibility by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -65,7 +65,7 @@ fun RegisterPage(doOnLoginClick: () -> Unit, doOnRegisterClick: () -> Unit) {
         )
         Text(
             modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_16)),
-            text = "Daftar",
+            text = stringResource(R.string.daftar),
             fontSize = dimensionResource(id = R.dimen.font_20).value.sp,
             fontWeight = FontWeight.Bold
         )
@@ -80,7 +80,7 @@ fun RegisterPage(doOnLoginClick: () -> Unit, doOnRegisterClick: () -> Unit) {
             shape = RoundedCornerShape(30),
             value = username,
             onValueChange = { username = it },
-            label = { Text("Nama Pengguna") }
+            label = { Text(stringResource(id = R.string.user_name)) }
         )
         OutlinedTextField(
             modifier = Modifier
@@ -93,7 +93,7 @@ fun RegisterPage(doOnLoginClick: () -> Unit, doOnRegisterClick: () -> Unit) {
             shape = RoundedCornerShape(30),
             value = password,
             onValueChange = { password = it },
-            label = { Text("Kata Sandi") },
+            label = { Text(stringResource(id = R.string.pasword)) },
             visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
@@ -120,15 +120,15 @@ fun RegisterPage(doOnLoginClick: () -> Unit, doOnRegisterClick: () -> Unit) {
             shape = RoundedCornerShape(30),
             value = repeatPassword,
             onValueChange = { repeatPassword = it },
-            label = { Text("Ulangi Kata Sandi") },
-            visualTransformation = if (repeatpasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+            label = { Text(stringResource(R.string.repeat_password)) },
+            visualTransformation = if (repeatPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             trailingIcon = {
                 IconButton(onClick = {
-                    repeatpasswordVisibility = !repeatpasswordVisibility
+                    repeatPasswordVisibility = !repeatPasswordVisibility
                 }) {
                     Icon(
-                        imageVector = if (repeatpasswordVisibility)
+                        imageVector = if (repeatPasswordVisibility)
                             Icons.Filled.Visibility
                         else
                             Icons.Filled.VisibilityOff, ""
@@ -138,7 +138,7 @@ fun RegisterPage(doOnLoginClick: () -> Unit, doOnRegisterClick: () -> Unit) {
         )
 
         ButtonPrimary(
-            "Daftar",
+            stringResource(id = R.string.daftar),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
@@ -152,7 +152,7 @@ fun RegisterPage(doOnLoginClick: () -> Unit, doOnRegisterClick: () -> Unit) {
             doOnRegisterClick.invoke()
         }
         val annotatedText = buildAnnotatedString {
-            append("Sudah memiliki akun ? ")
+            append(stringResource(R.string.sudah_memiliki_akun))
             pushStringAnnotation(
                 tag = Util.PAGE,
                 annotation = "https://developer.android.com"
@@ -163,7 +163,7 @@ fun RegisterPage(doOnLoginClick: () -> Unit, doOnRegisterClick: () -> Unit) {
                     fontWeight = FontWeight.Bold
                 )
             ) {
-                append("Masuk")
+                append(stringResource(id = R.string.masuk))
             }
             pop()
         }
@@ -180,9 +180,8 @@ fun RegisterPage(doOnLoginClick: () -> Unit, doOnRegisterClick: () -> Unit) {
                     tag = Util.PAGE,
                     start = offset,
                     end = offset
-                ).firstOrNull()?.let { annotation ->
+                ).firstOrNull()?.let { _ ->
                     doOnLoginClick.invoke()
-//                    Toast.makeText(context, annotation.item, Toast.LENGTH_SHORT).show()
                 }
             },
         )
