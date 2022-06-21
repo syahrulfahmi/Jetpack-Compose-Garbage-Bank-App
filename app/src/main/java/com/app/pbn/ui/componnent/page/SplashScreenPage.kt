@@ -1,4 +1,4 @@
-package com.app.pbn.ui.componnent
+package com.app.pbn.ui.componnent.page
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.pbn.R
 
-@Preview()
+@Preview
 @Composable
-fun SplashScreen() {
+fun SplashScreenPage() {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -30,7 +30,8 @@ fun SplashScreen() {
         Image(
             painter = painterResource(id = R.drawable.ic_trash_white),
             contentDescription = null,
-            modifier = Modifier.size(120.dp))
+            modifier = Modifier.size(120.dp)
+        )
         Text(
             modifier = Modifier.padding(top = dimensionResource(id = R.dimen.padding_16)),
             text = stringResource(id = R.string.app_name),
