@@ -1,14 +1,17 @@
-package com.app.pbn.ui.componnent.button
+package com.app.pbn.common.component
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import com.app.pbn.R
-
+import com.app.pbn.common.ext.buttonModifier
 
 @Composable()
 fun ButtonPrimary(buttonText: String, modifier: Modifier, doOnClick: () -> Unit) {
@@ -21,5 +24,12 @@ fun ButtonPrimary(buttonText: String, modifier: Modifier, doOnClick: () -> Unit)
         ),
         onClick = { doOnClick.invoke() }) {
         Text(text = buttonText)
+    }
+}
+
+@Composable
+fun DialogConfirmButton(@StringRes text: Int, action: () -> Unit) {
+    ButtonPrimary(buttonText = stringResource(id = text), modifier = Modifier.buttonModifier()) {
+        action.invoke()
     }
 }

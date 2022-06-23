@@ -1,4 +1,4 @@
-package com.app.pbn.ui.componnent.page
+package com.app.pbn.ui.page
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

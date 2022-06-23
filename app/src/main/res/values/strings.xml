@@ -1,14 +1,10 @@
 <resources>
     <string name="app_name">Bank Sampah Palembon</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
-    <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
-    <string name="user_name">Nama Pengguna</string>
+    <string name="user_name">Email</string>
     <string name="pasword">Kata Sandi</string>
     <string name="masuk">Masuk</string>
     <string name="belum_memiliki_akun">Belum memiliki akun ? &#160;</string>
@@ -16,4 +12,8 @@
     <string name="daftar">Daftar</string>
     <string name="repeat_password">Ulangi Kata Sandi</string>
     <string name="sudah_memiliki_akun">Sudah memiliki akun ? &#160;</string>
+    <string name="generic_error">Sesuatu yang salah terjadi. Silakan coba lagi.</string>
+    <string name="email_error">Please insert a valid email.</string>
+    <string name="password_match_error">Passwords do not match.</string>
+    <string name="ok">OK</string>
 </resources>
