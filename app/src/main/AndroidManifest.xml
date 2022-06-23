@@ -27,13 +27,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".ui.page.home.HomeActivity"
+            android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".ui.page.login.LoginActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.page.register.RegisterActivity"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.page.pickup.PickUpActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
     </application>
 
 </manifest>

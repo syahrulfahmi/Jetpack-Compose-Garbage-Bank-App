@@ -9,7 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import com.app.pbn.MainActivity
+import com.app.pbn.ui.page.home.HomeActivity
 import com.app.pbn.ui.page.register.RegisterActivity
 import com.app.pbn.ui.theme.BankSampahPalembonTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,7 +27,7 @@ class LoginActivity : ComponentActivity() {
                         viewModel = viewModel,
                         doOnLoginClick = {
                             viewModel.loginAccount {
-                                val intent = Intent(this, MainActivity::class.java)
+                                val intent = Intent(this, HomeActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
