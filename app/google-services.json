@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "246349572819",
+    "project_id": "bank-sampah-palembon",
+    "storage_bucket": "bank-sampah-palembon.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:246349572819:android:ca9efbfc02cf6e25878226",
+        "android_client_info": {
+          "package_name": "com.app.pbn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "246349572819-bo9eml19rkf8tnnogb18kvjhbfe6sofd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-kdggZUmHOqNt0pYRU6BoeWjhNegSH5k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "246349572819-bo9eml19rkf8tnnogb18kvjhbfe6sofd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
