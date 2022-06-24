@@ -16,7 +16,7 @@ class StorageServiceImpl @Inject constructor() : StorageService {
     override fun savePickUpTrash(trashModel: TrashModel, onResult: (Throwable?) -> Unit) {
         Firebase.firestore
             .collection(TRASH)
-            .document(trashModel.id)
+            .document(trashModel.email)
             .set(trashModel)
             .addOnCompleteListener { onResult(it.exception) }
     }

@@ -23,6 +23,7 @@ class PickUpActivity : ComponentActivity() {
             BankSampahPalembonTheme {
                 // A surface container using the 'background' color from the theme
                 viewModel.getTrashType()
+                viewModel.getUserAccount()
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                     PickUpPage(
                         viewModel,

@@ -1,9 +1,9 @@
 package com.app.pbn.ui.page.pickup
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.app.pbn.common.service.AccountService
 import com.app.pbn.common.service.StorageService
 import com.app.pbn.constant.Constant
 import com.app.pbn.model.TrashModel
@@ -12,18 +12,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class PickUpViewModel @Inject constructor(
-    private val storageService: StorageService
+    private val storageService: StorageService,
+    private val accountService: AccountService
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(TrashModel())
     val uiState = _uiState.asStateFlow()
 
     private val _trashList = MutableStateFlow(arrayListOf<TrashTypeModel>())
     val trashList = _trashList.asStateFlow()
+
 
     var loading = mutableStateOf(false)
     var isShowDialogError = mutableStateOf(false)
@@ -49,6 +50,14 @@ class PickUpViewModel @Inject constructor(
         }
     }
 
+    fun getUserAccount() {
+        viewModelScope.launch {
+            accountService.getUserInfo()?.email?.let {
+                onChangeEmail(it)
+            }
+        }
+    }
+
     fun getTrashType() {
         viewModelScope.launch {
             storageService.getTrashType(
@@ -66,10 +75,14 @@ class PickUpViewModel @Inject constructor(
     private fun isValid(): Boolean {
         return uiState.value.name.isNotEmpty()
                 && uiState.value.weight != Constant.ZERO_VALUE
-                && uiState.value.price.isNotEmpty()
+                && uiState.value.price != Constant.ZERO_VALUE
                 && uiState.value.category.isNotEmpty()
                 && uiState.value.date.isNotEmpty()
                 && uiState.value.address.isNotEmpty()
+    }
+
+    private fun onChangeEmail(newValue: String) {
+        _uiState.value = uiState.value.copy(email = newValue)
     }
 
     fun onUserNameChange(newValue: String) {
@@ -83,6 +96,19 @@ class PickUpViewModel @Inject constructor(
             _uiState.value = uiState.value.copy(weight = Constant.ZERO_VALUE)
             e.printStackTrace()
         }
+    }
+
+    fun onPriceChange(newValue: String) {
+        try {
+            _uiState.value = uiState.value.copy(price = newValue.toInt())
+        } catch (e: Exception) {
+            _uiState.value = uiState.value.copy(price = Constant.ZERO_VALUE)
+            e.printStackTrace()
+        }
+    }
+
+    fun onCategoryChange(newValue: String) {
+        _uiState.value = uiState.value.copy(category = newValue)
     }
 
     fun onDatesChange(newValue: String) {

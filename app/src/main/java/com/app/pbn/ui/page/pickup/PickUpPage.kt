@@ -1,6 +1,5 @@
 package com.app.pbn.ui.page.pickup
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -33,10 +32,12 @@ import com.app.pbn.common.ext.fieldModifier
 import com.app.pbn.common.ext.fullTextWidth
 import com.app.pbn.constant.Constant
 import com.app.pbn.model.TrashModel
+import com.app.pbn.model.TrashTypeModel
 
 @Composable
 fun PickUpPage(viewModel: PickUpViewModel, doOnBack: () -> Unit, doOnSave: () -> Unit) {
     val uiState = viewModel.uiState.collectAsState()
+    val trashList = viewModel.trashList.collectAsState()
 
     Column(
         modifier = Modifier
@@ -101,8 +102,11 @@ fun PickUpPage(viewModel: PickUpViewModel, doOnBack: () -> Unit, doOnSave: () ->
             fontSize = R.dimen.font_14
         )
         BasicField(uiState.value.name, viewModel::onUserNameChange, Modifier.fieldModifier(), "Masukan nama lengkap")
-        DropdownDemo(viewModel)
-        WeightAndPrice(uiState = uiState.value, viewModel = viewModel)
+        DropdownDemo(trashList) {
+            viewModel.onCategoryChange(it.name)
+            viewModel.onPriceChange(it.price.toString())
+        }
+        WeightAndPrice(uiState = uiState.value, viewModel = viewModel, trashList)
         ShowDatePicker(context = LocalContext.current, viewModel::onDatesChange)
         TextBold(
             text = "Alamat", modifier = Modifier
@@ -148,7 +152,7 @@ fun PickUpPage(viewModel: PickUpViewModel, doOnBack: () -> Unit, doOnSave: () ->
 }
 
 @Composable
-fun WeightAndPrice(uiState: TrashModel, viewModel: PickUpViewModel) {
+fun WeightAndPrice(uiState: TrashModel, viewModel: PickUpViewModel, items: State<ArrayList<TrashTypeModel>>) {
     Row(
         modifier = Modifier.fieldModifier(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -176,21 +180,22 @@ fun WeightAndPrice(uiState: TrashModel, viewModel: PickUpViewModel) {
                     .padding(top = 16.dp),
                 fontSize = R.dimen.font_14
             )
-            BasicField(
-                value = "Rp. 30.000",
-                onNewValue = { },
-                modifier = Modifier,
-                placeholder = "Masukan berat sampah",
-                isEnabled = false
-            )
+            if (items.value.isNotEmpty()) {
+                BasicField(
+                    value = if (uiState.price == Constant.ZERO_VALUE) "Rp. ${items.value[0].price}" else "Rp. ${uiState.price}",
+                    onNewValue = viewModel::onPriceChange,
+                    modifier = Modifier,
+                    placeholder = "Masukan berat sampah",
+                    isEnabled = false
+                )
+            }
         }
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DropdownDemo(viewModel: PickUpViewModel) {
-    val items = viewModel.trashList.collectAsState()
+fun DropdownDemo(items: State<ArrayList<TrashTypeModel>>, doOnItemClick: (TrashTypeModel) -> Unit) {
     if (items.value.isNotEmpty()) {
         var expanded by remember { mutableStateOf(false) }
         var selectedIndex by remember { mutableStateOf(0) }
@@ -244,6 +249,7 @@ fun DropdownDemo(viewModel: PickUpViewModel) {
                         DropdownMenuItem(
                             modifier = Modifier.fillMaxWidth(),
                             onClick = {
+                                doOnItemClick.invoke(item)
                                 selectedIndex = index
                                 expanded = false
                             }) {
@@ -254,6 +260,4 @@ fun DropdownDemo(viewModel: PickUpViewModel) {
             }
         }
     }
-
-//
 }
