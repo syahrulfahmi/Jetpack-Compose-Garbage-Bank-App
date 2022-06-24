@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
 import com.app.pbn.ui.page.SplashScreenPage
+import com.app.pbn.ui.page.home.HomeActivity
 import com.app.pbn.ui.page.login.LoginActivity
 import com.app.pbn.ui.theme.BankSampahPalembonTheme
 import kotlinx.coroutines.delay
@@ -28,7 +29,7 @@ class SplashScreenActivity : ComponentActivity() {
                     SplashScreenPage()
                     lifecycleScope.launchWhenCreated {
                         delay(2000)
-                        val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)
+                        val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
                         startActivity(intent)
                         finish()
                     }

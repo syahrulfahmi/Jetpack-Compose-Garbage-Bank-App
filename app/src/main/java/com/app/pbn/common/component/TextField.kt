@@ -20,20 +20,42 @@ import com.app.pbn.R.string as AppText
 
 
 @Composable
-fun EmailField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
-    Column() {
-        OutlinedTextField(
-            singleLine = true,
-            modifier = modifier,
-            value = value,
-            shape = RoundedCornerShape(10.dp),
-            onValueChange = { onNewValue(it) },
-            placeholder = { Text(stringResource(AppText.user_name)) },
-            leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-        )
-    }
+fun BasicField(
+    value: String,
+    onNewValue: (String) -> Unit,
+    modifier: Modifier = Modifier,
+    placeholder: String,
+    isEnabled: Boolean = true,
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+) {
+    OutlinedTextField(
+        colors = TextFieldDefaults.outlinedTextFieldColors(
+            unfocusedBorderColor = MaterialTheme.colors.onSurface,
+            disabledBorderColor = MaterialTheme.colors.onSurface,
+        ),
+        singleLine = true,
+        modifier = modifier,
+        value = value,
+        shape = RoundedCornerShape(10.dp),
+        onValueChange = { onNewValue(it) },
+        placeholder = { Text(placeholder) },
+        enabled = isEnabled,
+        keyboardOptions = keyboardOptions
+    )
+}
 
+@Composable
+fun EmailField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
+    OutlinedTextField(
+        singleLine = true,
+        modifier = modifier,
+        value = value,
+        shape = RoundedCornerShape(10.dp),
+        onValueChange = { onNewValue(it) },
+        placeholder = { Text(stringResource(AppText.user_name)) },
+        leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+    )
 }
 
 @Composable
@@ -62,7 +84,7 @@ fun PasswordField(value: String, placeholder: String, modifier: Modifier, onNewV
         PasswordVisualTransformation()
     }
 
-    Column() {
+    Column {
         OutlinedTextField(
             modifier = modifier,
             value = value,

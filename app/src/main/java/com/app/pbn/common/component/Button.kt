@@ -4,8 +4,6 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
@@ -23,7 +21,7 @@ fun ButtonPrimary(buttonText: String, modifier: Modifier, doOnClick: () -> Unit)
             contentColor = colorResource(id = R.color.white)
         ),
         onClick = { doOnClick.invoke() }) {
-        Text(text = buttonText)
+        TextBold(text = buttonText, fontSize = R.dimen.font_16)
     }
 }
 
