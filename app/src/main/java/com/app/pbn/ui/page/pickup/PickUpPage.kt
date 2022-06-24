@@ -1,5 +1,6 @@
 package com.app.pbn.ui.page.pickup
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -22,18 +23,20 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.app.pbn.R
-import com.app.pbn.common.component.BasicField
-import com.app.pbn.common.component.ButtonPrimary
-import com.app.pbn.common.component.ShowDatePicker
-import com.app.pbn.common.component.TextBold
+import com.app.pbn.common.component.*
 import com.app.pbn.common.ext.buttonModifier
 import com.app.pbn.common.ext.fieldModifier
+import com.app.pbn.common.ext.fullTextWidth
+import com.app.pbn.constant.Constant
+import com.app.pbn.model.TrashModel
 
 @Composable
-fun PickUpPage(viewModel: PickUpViewModel? = null, doOnBack: () -> Unit) {
-    val uiState by viewModel?.uiState!!
+fun PickUpPage(viewModel: PickUpViewModel, doOnBack: () -> Unit, doOnSave: () -> Unit) {
+    val uiState = viewModel.uiState.collectAsState()
 
     Column(
         modifier = Modifier
@@ -97,34 +100,55 @@ fun PickUpPage(viewModel: PickUpViewModel? = null, doOnBack: () -> Unit) {
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             fontSize = R.dimen.font_14
         )
-        BasicField(uiState.username, viewModel!!::onUserNameChange, Modifier.fieldModifier(), "Masukan nama lengkap")
-        WeightAndPrice(uiState = uiState, viewModel = viewModel)
-        DropdownDemo()
-        ShowDatePicker(context = LocalContext.current)
+        BasicField(uiState.value.name, viewModel::onUserNameChange, Modifier.fieldModifier(), "Masukan nama lengkap")
+        DropdownDemo(viewModel)
+        WeightAndPrice(uiState = uiState.value, viewModel = viewModel)
+        ShowDatePicker(context = LocalContext.current, viewModel::onDatesChange)
         TextBold(
             text = "Alamat", modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             fontSize = R.dimen.font_14
         )
-        BasicField(uiState.address, viewModel::onAddressChange, Modifier.fieldModifier(), "Masukan alamat")
+        BasicField(uiState.value.address, viewModel::onAddressChange, Modifier.fieldModifier(), "Masukan alamat")
         TextBold(
-            text = "Catatan Tambahan", modifier = Modifier
+            text = "Catatan Tambahan (Optional)", modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             fontSize = R.dimen.font_14
         )
-        BasicField(uiState.notes, viewModel::onNotesChange, Modifier.fieldModifier(), "Masukan catatan tambahan")
+        BasicField(uiState.value.notes, viewModel::onNotesChange, Modifier.fieldModifier(), "Masukan catatan tambahan")
         Spacer(modifier = Modifier.padding(top = 16.dp))
         ButtonPrimary(buttonText = "Jemput Sampah ", modifier = Modifier.buttonModifier()) {
-
+            doOnSave.invoke()
         }
         Spacer(modifier = Modifier.height(18.dp))
+
+        LoadingDialog(viewModel.loading.value)
+
+        if (viewModel.isShowDialogError.value) {
+            AlertDialog(
+                shape = RoundedCornerShape(10.dp),
+                text = {
+                    Text(
+                        modifier = Modifier.fullTextWidth(),
+                        text = viewModel.errorMessage.value,
+                        fontSize = dimensionResource(id = R.dimen.font_18).value.sp,
+                        textAlign = TextAlign.Center,
+                        color = Color.Black
+                    )
+                },
+                dismissButton = { DialogConfirmButton(R.string.ok) { viewModel.isShowDialogError.value = false } },
+                confirmButton = {
+                },
+                onDismissRequest = { viewModel.isShowDialogError.value = false }
+            )
+        }
     }
 }
 
 @Composable
-fun WeightAndPrice(uiState: PickUpUiState, viewModel: PickUpViewModel) {
+fun WeightAndPrice(uiState: TrashModel, viewModel: PickUpViewModel) {
     Row(
         modifier = Modifier.fieldModifier(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -137,7 +161,7 @@ fun WeightAndPrice(uiState: PickUpUiState, viewModel: PickUpViewModel) {
                 fontSize = R.dimen.font_14
             )
             BasicField(
-                value = uiState.weight,
+                value = if (uiState.weight == Constant.ZERO_VALUE) Constant.EMPTY_STRING else uiState.weight.toString(),
                 onNewValue = viewModel::onWeightChange,
                 modifier = Modifier,
                 placeholder = "Masukan berat sampah",
@@ -165,73 +189,71 @@ fun WeightAndPrice(uiState: PickUpUiState, viewModel: PickUpViewModel) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun DropdownDemo() {
-    var expanded by remember { mutableStateOf(false) }
-    val items = listOf("A", "B", "C", "D", "E", "F")
-    val disabledValue = "B"
-    var selectedIndex by remember { mutableStateOf(0) }
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .wrapContentSize(Alignment.TopStart),
-    ) {
-        Column(
-            modifier = Modifier.fillMaxWidth()
+fun DropdownDemo(viewModel: PickUpViewModel) {
+    val items = viewModel.trashList.collectAsState()
+    if (items.value.isNotEmpty()) {
+        var expanded by remember { mutableStateOf(false) }
+        var selectedIndex by remember { mutableStateOf(0) }
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .wrapContentSize(Alignment.TopStart),
         ) {
-            TextBold(
-                text = "Kategori Sampah",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                fontSize = R.dimen.font_14
-            )
-            Card(
-                shape = RoundedCornerShape(10.dp),
-                modifier = Modifier.padding(top = 8.dp),
-                border = BorderStroke(1.dp, MaterialTheme.colors.onSurface),
-                backgroundColor = Color.White,
-                onClick = {
-                    expanded = true
-                },
+            Column(
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Row(
+                TextBold(
+                    text = "Kategori Sampah",
                     modifier = Modifier
-                        .fieldModifier()
-                        .padding(vertical = 16.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
+                    fontSize = R.dimen.font_14
+                )
+                Card(
+                    shape = RoundedCornerShape(10.dp),
+                    modifier = Modifier.padding(top = 8.dp),
+                    border = BorderStroke(1.dp, MaterialTheme.colors.onSurface),
+                    backgroundColor = Color.White,
+                    onClick = {
+                        expanded = true
+                    },
                 ) {
-                    Text(
-                        text = items[selectedIndex],
-                    )
-                    Icon(
-                        imageVector = Icons.Filled.ArrowDropDown,
-                        contentDescription = "Back",
-                        tint = Color.Black
-                    )
+                    Row(
+                        modifier = Modifier
+                            .fieldModifier()
+                            .padding(vertical = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            text = items.value[selectedIndex].name,
+                        )
+                        Icon(
+                            imageVector = Icons.Filled.ArrowDropDown,
+                            contentDescription = "Back",
+                            tint = Color.Black
+                        )
+                    }
                 }
-            }
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-            ) {
-                items.forEachIndexed { index, s ->
-                    DropdownMenuItem(
-                        modifier = Modifier.fillMaxWidth(),
-                        onClick = {
-                            selectedIndex = index
-                            expanded = false
-                        }) {
-                        val disabledText = if (s == disabledValue) {
-                            " (Disabled) asdqeqwewe"
-                        } else {
-                            ""
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                ) {
+                    items.value.forEachIndexed { index, item ->
+                        DropdownMenuItem(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = {
+                                selectedIndex = index
+                                expanded = false
+                            }) {
+                            Text(text = item.name)
                         }
-                        Text(text = s + disabledText)
                     }
                 }
             }
         }
     }
+
+//
 }

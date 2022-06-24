@@ -20,10 +20,9 @@ import com.app.pbn.R
 import com.app.pbn.common.ext.fieldModifier
 import java.util.*
 
-
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ShowDatePicker(context: Context) {
+fun ShowDatePicker(context: Context, onChangeValue: (String) -> Unit) {
     val year: Int
     val month: Int
     val day: Int
@@ -36,8 +35,9 @@ fun ShowDatePicker(context: Context) {
 
     val date = remember { mutableStateOf("") }
     val datePickerDialog = DatePickerDialog(
-        context, { _: DatePicker, year: Int, month: Int, dayOfMonth: Int ->
-            date.value = "$dayOfMonth/$month/$year"
+        context, { _: DatePicker, dateYear: Int, dateMonth: Int, dayOfMonth: Int ->
+            date.value = "$dayOfMonth/$dateMonth/$dateYear"
+            onChangeValue.invoke(date.value)
         }, year, month, day
     )
     Box(
@@ -71,7 +71,8 @@ fun ShowDatePicker(context: Context) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = date.value,
+                        text = date.value.ifEmpty { "Masukan tanggal" },
+                        color = if (date.value.isEmpty()) Color.Gray else Color.Black
                     )
                     Icon(
                         imageVector = Icons.Filled.CalendarMonth,

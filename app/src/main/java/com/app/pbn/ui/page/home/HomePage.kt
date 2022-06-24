@@ -18,19 +18,19 @@ import androidx.compose.ui.unit.sp
 import com.app.pbn.R
 import com.app.pbn.common.component.TextBold
 import com.app.pbn.common.ext.fullTextWidth
+import com.app.pbn.model.UserModel
 
 @Composable
-fun HomePage(doOnPickUpCLick: () -> Unit, doOnGarbageTypeClick: () -> Unit, doOnHistoryClick: () -> Unit) {
+fun HomePage(userData: UserModel, doOnPickUpCLick: () -> Unit, doOnGarbageTypeClick: () -> Unit, doOnHistoryClick: () -> Unit, doOnLogOut: () -> Unit) {
     if (true) {
-        HomePageUser(doOnPickUpCLick::invoke, doOnGarbageTypeClick::invoke, doOnHistoryClick::invoke)
+        HomePageUser(userData, doOnPickUpCLick::invoke, doOnGarbageTypeClick::invoke, doOnHistoryClick::invoke, doOnLogOut::invoke)
     } else {
         HomePageAdmin()
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomePageUser(doOnPickUpClick: () -> Unit, doOnGarbageTypeClick: () -> Unit, doOnHistoryClick: () -> Unit) {
+fun HomePageUser(userData: UserModel, doOnPickUpClick: () -> Unit, doOnGarbageTypeClick: () -> Unit, doOnHistoryClick: () -> Unit, doOnLogOut: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,13 +52,15 @@ fun HomePageUser(doOnPickUpClick: () -> Unit, doOnGarbageTypeClick: () -> Unit, 
                     fontSize = dimensionResource(id = R.dimen.font_18).value.sp
                 )
                 Text(
-                    text = "Fahmi",
+                    text = userData.name,
                     fontSize = dimensionResource(id = R.dimen.font_20).value.sp,
                     fontWeight = FontWeight.Bold
                 )
             }
             Image(
-                modifier = Modifier.size(48.dp),
+                modifier = Modifier
+                    .size(48.dp)
+                    .clickable { doOnLogOut.invoke() },
                 painter = painterResource(
                     id = R.drawable.ic_user
                 ),

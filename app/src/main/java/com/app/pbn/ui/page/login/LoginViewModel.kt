@@ -40,10 +40,8 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             accountService.signInAccount(email, password) { error ->
                 if (error == null) {
-                    Log.i("zxcasd", "succes")
                     doOnSuccess.invoke()
                 } else {
-                    Log.i("zxcasd", "${error.message}")
                     isShowDialogError.value = true
                     errorMessage.value = error.message.toString()
                 }

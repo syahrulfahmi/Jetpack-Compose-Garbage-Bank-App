@@ -8,7 +8,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -60,6 +64,7 @@ fun RegisterPage(viewModel: RegisterViewModel, doOnLoginClick: () -> Unit, doOnR
             fontWeight = FontWeight.Bold
         )
 
+        NameField(uiState.name, viewModel::onNameChange, fieldModifier)
         EmailField(uiState.email, viewModel::onEmailChange, fieldModifier)
         PasswordField(uiState.password, viewModel::onPasswordChange, fieldModifier)
         RepeatPasswordField(uiState.repeatPassword, viewModel::onRepeatPasswordChange, fieldModifier)

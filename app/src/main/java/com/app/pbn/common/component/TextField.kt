@@ -5,10 +5,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -26,7 +23,8 @@ fun BasicField(
     modifier: Modifier = Modifier,
     placeholder: String,
     isEnabled: Boolean = true,
-    keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+    leadingIcon: @Composable (() -> Unit)? = null
 ) {
     OutlinedTextField(
         colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -35,6 +33,7 @@ fun BasicField(
         ),
         singleLine = true,
         modifier = modifier,
+        leadingIcon = leadingIcon,
         value = value,
         shape = RoundedCornerShape(10.dp),
         onValueChange = { onNewValue(it) },
@@ -44,6 +43,19 @@ fun BasicField(
     )
 }
 
+@Composable
+fun NameField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
+    OutlinedTextField(
+        singleLine = true,
+        modifier = modifier,
+        value = value,
+        shape = RoundedCornerShape(10.dp),
+        onValueChange = { onNewValue(it) },
+        placeholder = { Text(stringResource(AppText.name)) },
+        leadingIcon = { Icon(imageVector = Icons.Default.Person, contentDescription = "nama") },
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+    )
+}
 @Composable
 fun EmailField(value: String, onNewValue: (String) -> Unit, modifier: Modifier = Modifier) {
     OutlinedTextField(

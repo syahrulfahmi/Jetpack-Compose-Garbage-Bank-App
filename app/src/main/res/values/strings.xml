@@ -5,6 +5,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="user_name">Email</string>
+    <string name="name">Nama Lengkap</string>
     <string name="pasword">Kata Sandi</string>
     <string name="masuk">Masuk</string>
     <string name="belum_memiliki_akun">Belum memiliki akun ? &#160;</string>

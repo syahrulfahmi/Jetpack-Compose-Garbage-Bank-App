@@ -10,6 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -17,11 +18,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.app.pbn.R
+import com.app.pbn.common.component.LoadingDialog
 import com.app.pbn.common.component.Ticker
 
-@Preview(showBackground = true)
 @Composable
-fun GarbageTypePage() {
+fun GarbageTypePage(viewModel: GarbageTypeViewModel, doOnBackPressed: () -> Unit) {
+
+    val uiState = viewModel.trashList.collectAsState()
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -38,6 +42,7 @@ fun GarbageTypePage() {
             },
             navigationIcon = {
                 IconButton(onClick = {
+                    doOnBackPressed.invoke()
                 }) {
                     Icon(
                         imageVector = Icons.Filled.ChevronLeft,
@@ -51,9 +56,9 @@ fun GarbageTypePage() {
             elevation = 2.dp
         )
         Spacer(modifier = Modifier.height(18.dp))
-        Ticker("Sampah Plastik : 2500/kg")
-        Ticker("Sampah Kertas : 2000/kg")
-        Ticker("Sampah Besi : 2000/kg")
-        Ticker("Sampah Kardus : 5000/kg")
+        uiState.value.forEach { item ->
+            Ticker("${item.name} : ${item.price}/kg")
+        }
+        LoadingDialog(isShowDialog = viewModel.loading.value)
     }
 }

@@ -8,6 +8,7 @@ import com.app.pbn.common.ext.isValidEmail
 import com.app.pbn.common.ext.isValidPassword
 import com.app.pbn.common.ext.passwordMatches
 import com.app.pbn.common.service.AccountService
+import com.app.pbn.model.UserModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,9 +17,10 @@ import javax.inject.Inject
 class RegisterViewModel @Inject constructor(
     private val accountService: AccountService
 ) : ViewModel() {
-    var uiState = mutableStateOf(RegisterUiState())
+    var uiState = mutableStateOf(UserModel())
         private set
 
+    private val name get() = uiState.value.name
     private val email get() = uiState.value.email
     private val password get() = uiState.value.password
     var loading = mutableStateOf(false)
@@ -26,6 +28,11 @@ class RegisterViewModel @Inject constructor(
     var errorMessage = mutableStateOf("")
 
     fun registerAccount(doOnSuccess: () -> Unit) {
+        if (name.isEmpty()) {
+            isShowDialogError.value = true
+            errorMessage.value = "Nama lengkap harus diisi"
+            return
+        }
         if (!email.isValidEmail()) {
             isShowDialogError.value = true
             errorMessage.value = "Email anda tidak valid"
@@ -47,10 +54,9 @@ class RegisterViewModel @Inject constructor(
         viewModelScope.launch {
             accountService.signUpAccount(email, password) { error ->
                 if (error == null) {
-                    Log.i("zxcasd", "succes")
                     doOnSuccess.invoke()
+                    addUserToFireStore()
                 } else {
-                    Log.i("zxcasd", "${error.message}")
                     isShowDialogError.value = true
                     errorMessage.value = error.message.toString()
                 }
@@ -59,6 +65,21 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
+    private fun addUserToFireStore() {
+        viewModelScope.launch {
+            accountService.addUserToFireStore(uiState.value) { error ->
+                if (error != null) {
+                    isShowDialogError.value = true
+                    errorMessage.value = error.message.toString()
+                    loading.value = false
+                }
+            }
+        }
+    }
+
+    fun onNameChange(newValue: String) {
+        uiState.value = uiState.value.copy(name = newValue)
+    }
     fun onEmailChange(newValue: String) {
         uiState.value = uiState.value.copy(email = newValue)
     }
