@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.app.pbn.R
@@ -43,7 +44,9 @@ fun PickUpPage(viewModel: PickUpViewModel? = null, doOnBack: () -> Unit) {
             title = {
                 Text(
                     text = "Jemput Sampah",
-                    color = colorResource(id = R.color.black)
+                    color = colorResource(id = R.color.black),
+                    style = MaterialTheme.typography.body1,
+                    fontWeight = FontWeight.Bold,
                 )
             },
             navigationIcon = {
@@ -87,7 +90,7 @@ fun PickUpPage(viewModel: PickUpViewModel? = null, doOnBack: () -> Unit) {
                 )
             }
         }
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(18.dp))
         TextBold(
             text = "Nama Pengguna", modifier = Modifier
                 .fillMaxWidth()
@@ -116,6 +119,7 @@ fun PickUpPage(viewModel: PickUpViewModel? = null, doOnBack: () -> Unit) {
         ButtonPrimary(buttonText = "Jemput Sampah ", modifier = Modifier.buttonModifier()) {
 
         }
+        Spacer(modifier = Modifier.height(18.dp))
     }
 }
 

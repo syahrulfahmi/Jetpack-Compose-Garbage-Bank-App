@@ -7,6 +7,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Fahmi\\Documents\\KeyStore\\PalembonApp.jks')
+            storePassword 'pal3mb0n'
+            keyAlias 'key0'
+            keyPassword 'pal3mb0n'
+        }
+    }
     compileSdk 32
 
     defaultConfig {
@@ -20,6 +28,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+        signingConfig signingConfigs.release
     }
 
     buildTypes {

@@ -20,9 +20,9 @@ import com.app.pbn.common.component.TextBold
 import com.app.pbn.common.ext.fullTextWidth
 
 @Composable
-fun HomePage(doOnPickUpCLick: () -> Unit) {
+fun HomePage(doOnPickUpCLick: () -> Unit, doOnGarbageTypeClick: () -> Unit, doOnHistoryClick: () -> Unit) {
     if (true) {
-        HomePageUser(doOnPickUpCLick::invoke)
+        HomePageUser(doOnPickUpCLick::invoke, doOnGarbageTypeClick::invoke, doOnHistoryClick::invoke)
     } else {
         HomePageAdmin()
     }
@@ -30,7 +30,7 @@ fun HomePage(doOnPickUpCLick: () -> Unit) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomePageUser(doOnPickUpClick: () -> Unit) {
+fun HomePageUser(doOnPickUpClick: () -> Unit, doOnGarbageTypeClick: () -> Unit, doOnHistoryClick: () -> Unit) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,7 +52,7 @@ fun HomePageUser(doOnPickUpClick: () -> Unit) {
                     fontSize = dimensionResource(id = R.dimen.font_18).value.sp
                 )
                 Text(
-                    text = "Nama Pengguna",
+                    text = "Fahmi",
                     fontSize = dimensionResource(id = R.dimen.font_20).value.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -91,7 +91,7 @@ fun HomePageUser(doOnPickUpClick: () -> Unit) {
                                 end = dimensionResource(id = R.dimen.padding_16),
                                 top = dimensionResource(id = R.dimen.padding_8)
                             ),
-                        text = "Sampah merupakan hasil produksi manusia yang tidak akan pernah luput dari kehidupan sehari-hari. Lalu, jenis-jenis sampah apa yang biasanya kita hasilkan? Yuk, kenali di sini.\n\nSampah jika dibiarkan saja akan mengganggu kebersihan lingkungan secara umum."
+                        text = "Sampah merupakan hasil produksi manusia yang tidak akan pernah luput dari kehidupan sehari-hari. Lalu, jenis-jenis sampah apa yang biasanya kita hasilkan? Yuk, kenali di sini."
                     )
                 }
                 Image(
@@ -113,12 +113,12 @@ fun HomePageUser(doOnPickUpClick: () -> Unit) {
                 modifier = Modifier
                     .weight(1f)
                     .padding(dimensionResource(id = R.dimen.padding_8))
-                    .clickable { },
+                    .height(180.dp)
+                    .clickable {
+                        doOnPickUpClick.invoke()
+                    },
                 shape = RoundedCornerShape(10.dp),
                 elevation = dimensionResource(id = R.dimen.padding_4),
-                onClick = {
-                    doOnPickUpClick.invoke()
-                }
             ) {
                 Column(
                     modifier = Modifier.padding(15.dp),
@@ -144,7 +144,10 @@ fun HomePageUser(doOnPickUpClick: () -> Unit) {
                 modifier = Modifier
                     .weight(1f)
                     .padding(dimensionResource(id = R.dimen.padding_8))
-                    .clickable { },
+                    .height(180.dp)
+                    .clickable {
+                        doOnGarbageTypeClick.invoke()
+                    },
                 shape = RoundedCornerShape(10.dp),
                 elevation = dimensionResource(id = R.dimen.padding_4)
             ) {
@@ -173,13 +176,15 @@ fun HomePageUser(doOnPickUpClick: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(15.dp)
-                .clickable { },
+                .height(180.dp)
+                .clickable { doOnHistoryClick.invoke() },
             shape = RoundedCornerShape(10.dp),
             elevation = dimensionResource(id = R.dimen.padding_4)
         ) {
             Column(
                 modifier = Modifier.padding(vertical = dimensionResource(id = R.dimen.padding_16)),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
             ) {
                 Image(
                     modifier = Modifier.size(64.dp),
@@ -252,8 +257,7 @@ fun HomePageAdmin() {
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Bank Sampah Palembon",
-                        fontSize = dimensionResource(id = R.dimen.font_20).value.sp,
+                        text = "Bank Sampah Palembon", fontSize = dimensionResource(id = R.dimen.font_20).value.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
@@ -262,7 +266,7 @@ fun HomePageAdmin() {
                                 end = dimensionResource(id = R.dimen.padding_16),
                                 top = dimensionResource(id = R.dimen.padding_8)
                             ),
-                        text = "Sampah merupakan hasil produksi manusia yang tidak akan pernah luput dari kehidupan sehari-hari. Lalu, jenis-jenis sampah apa yang biasanya kita hasilkan? Yuk, kenali di sini.\n\nSampah jika dibiarkan saja akan mengganggu kebersihan lingkungan secara umum."
+                        text = "Sampah merupakan hasil produksi manusia yang tidak akan pernah luput dari kehidupan sehari-hari. Lalu, jenis-jenis sampah apa yang biasanya kita hasilkan? Yuk, kenali di sini."
                     )
                 }
                 Image(

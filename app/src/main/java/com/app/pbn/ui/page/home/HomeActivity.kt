@@ -10,6 +10,8 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.app.pbn.ui.page.garbagetype.GarbageTypeActivity
+import com.app.pbn.ui.page.history.HistoryActivity
 import com.app.pbn.ui.page.pickup.PickUpActivity
 import com.app.pbn.ui.theme.BankSampahPalembonTheme
 
@@ -24,6 +26,14 @@ class HomeActivity : ComponentActivity() {
                         doOnPickUpCLick = {
                             val intent = Intent(this, PickUpActivity::class.java)
                             startActivity(intent)
+                        },
+                        doOnGarbageTypeClick = {
+                            val intent = Intent(this, GarbageTypeActivity::class.java)
+                            startActivity(intent)
+                        },
+                        doOnHistoryClick = {
+                            val intent = Intent(this, HistoryActivity::class.java)
+                            startActivity(intent)
                         }
                     )
                 }
@@ -36,8 +46,10 @@ class HomeActivity : ComponentActivity() {
 @Composable
 fun DefaultPreview() {
     BankSampahPalembonTheme {
-        HomePage {
-
-        }
+        HomePage(
+            {},
+            {},
+            {}
+        )
     }
 }
