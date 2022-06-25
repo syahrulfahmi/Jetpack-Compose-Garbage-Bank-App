@@ -1,10 +1,14 @@
 package com.app.pbn.common.ext
 
+import android.text.TextUtils
 import android.util.Base64
 import android.util.Patterns
 import com.app.pbn.constant.iv
 import com.app.pbn.constant.salt
 import com.app.pbn.constant.secretKey
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
+import java.util.*
 import javax.crypto.Cipher
 import javax.crypto.SecretKeyFactory
 import javax.crypto.spec.IvParameterSpec
@@ -23,6 +27,23 @@ fun String.isValidPassword(): Boolean {
 
 fun String.passwordMatches(repeated: String): Boolean {
     return this == repeated
+}
+fun String.convertToCurrencyFormat(): String {
+    val locale = Locale("in", "id")
+    val symbols = DecimalFormatSymbols.getInstance(locale)
+    symbols.groupingSeparator = '.'
+    symbols.monetaryDecimalSeparator = ','
+    symbols.currencySymbol = symbols.currencySymbol
+
+    val df = DecimalFormat.getCurrencyInstance(locale) as DecimalFormat
+    val kursIndonesia = DecimalFormat(df.toPattern(), symbols)
+    kursIndonesia.maximumFractionDigits = 0
+
+    return if (TextUtils.isEmpty(this)) {
+        kursIndonesia.format(0)
+    } else {
+        kursIndonesia.format(java.lang.Double.parseDouble(this))
+    }
 }
 
 fun String.encrypt(): String {

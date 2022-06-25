@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.lifecycleScope
-import com.app.pbn.ui.page.SplashScreenPage
+import com.app.pbn.constant.EXTRA
 import com.app.pbn.ui.page.home.HomeActivity
 import com.app.pbn.ui.page.login.LoginActivity
 import com.app.pbn.ui.theme.BankSampahPalembonTheme
@@ -26,6 +26,9 @@ class SplashScreenActivity : ComponentActivity() {
     private val viewModel: SplashScreenViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        viewModel.getUserInfo()
+
         setContent {
             BankSampahPalembonTheme {
                 // A surface container using the 'background' color from the theme
@@ -35,7 +38,9 @@ class SplashScreenActivity : ComponentActivity() {
                         delay(2000)
                         viewModel.checkUserIfLogin {
                             if (it) {
-                                val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java)
+                                val intent = Intent(this@SplashScreenActivity, HomeActivity::class.java).apply {
+                                    putExtra(EXTRA.DATA, viewModel.uiState.value.isAdmin)
+                                }
                                 startActivity(intent)
                             } else {
                                 val intent = Intent(this@SplashScreenActivity, LoginActivity::class.java)

@@ -1,12 +1,12 @@
 package com.app.pbn.ui.page.login
 
-import android.util.Log
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.app.pbn.common.ext.isValidEmail
 import com.app.pbn.common.ext.isValidPassword
 import com.app.pbn.common.service.AccountService
+import com.app.pbn.model.UserModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,7 +24,7 @@ class LoginViewModel @Inject constructor(
     var isShowDialogError = mutableStateOf(false)
     var errorMessage = mutableStateOf("")
 
-    fun loginAccount(doOnSuccess: () -> Unit) {
+    fun loginAccount(doOnSuccess: (Boolean) -> Unit) {
         if (!email.isValidEmail()) {
             isShowDialogError.value = true
             errorMessage.value = "Email anda tidak valid"
@@ -40,12 +40,26 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             accountService.signInAccount(email, password) { error ->
                 if (error == null) {
-                    doOnSuccess.invoke()
+                    getUserInfo(doOnSuccess::invoke)
                 } else {
                     isShowDialogError.value = true
                     errorMessage.value = error.message.toString()
                 }
                 loading.value = false
+            }
+        }
+    }
+
+    private fun getUserInfo(doOnSuccess: (Boolean) -> Unit) {
+        viewModelScope.launch {
+            accountService.getUserInfo()?.email?.let { email ->
+                accountService.getUserFromFireStore(
+                    email,
+                    onFailure = {},
+                    onSuccess = {
+                        doOnSuccess.invoke(it.isAdmin)
+                    }
+                )
             }
         }
     }

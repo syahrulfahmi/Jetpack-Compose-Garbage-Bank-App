@@ -8,5 +8,5 @@ data class UserModel(
     val email: String = Constant.EMPTY_STRING,
     val password: String = Constant.EMPTY_STRING,
     val repeatPassword: String = Constant.EMPTY_STRING,
-    val isAdmin: Boolean = Constant.FALSE
+    @field:JvmField val isAdmin: Boolean = Constant.FALSE
 )

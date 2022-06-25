@@ -1,4 +1,4 @@
-package com.app.pbn.ui.page
+package com.app.pbn.ui.page.splashscreen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

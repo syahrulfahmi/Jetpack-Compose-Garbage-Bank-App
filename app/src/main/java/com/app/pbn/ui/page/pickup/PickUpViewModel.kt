@@ -25,7 +25,6 @@ class PickUpViewModel @Inject constructor(
     private val _trashList = MutableStateFlow(arrayListOf<TrashTypeModel>())
     val trashList = _trashList.asStateFlow()
 
-
     var loading = mutableStateOf(false)
     var isShowDialogError = mutableStateOf(false)
     var errorMessage = mutableStateOf("")

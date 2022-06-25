@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import com.app.pbn.constant.EXTRA
 import com.app.pbn.ui.page.home.HomeActivity
 import com.app.pbn.ui.page.register.RegisterActivity
 import com.app.pbn.ui.theme.BankSampahPalembonTheme
@@ -19,6 +20,7 @@ class LoginActivity : ComponentActivity() {
     private val viewModel: LoginViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             BankSampahPalembonTheme {
                 // A surface container using the 'background' color from the theme
@@ -27,7 +29,9 @@ class LoginActivity : ComponentActivity() {
                         viewModel = viewModel,
                         doOnLoginClick = {
                             viewModel.loginAccount {
-                                val intent = Intent(this, HomeActivity::class.java)
+                                val intent = Intent(this, HomeActivity::class.java).apply {
+                                    putExtra(EXTRA.DATA, it)
+                                }
                                 startActivity(intent)
                                 finish()
                             }

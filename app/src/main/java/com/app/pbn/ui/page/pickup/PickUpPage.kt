@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import com.app.pbn.R
 import com.app.pbn.common.component.*
 import com.app.pbn.common.ext.buttonModifier
+import com.app.pbn.common.ext.convertToCurrencyFormat
 import com.app.pbn.common.ext.fieldModifier
 import com.app.pbn.common.ext.fullTextWidth
 import com.app.pbn.constant.Constant
@@ -182,7 +183,7 @@ fun WeightAndPrice(uiState: TrashModel, viewModel: PickUpViewModel, items: State
             )
             if (items.value.isNotEmpty()) {
                 BasicField(
-                    value = if (uiState.price == Constant.ZERO_VALUE) "Rp. ${items.value[0].price}" else "Rp. ${uiState.price}",
+                    value = if (uiState.price == Constant.ZERO_VALUE) items.value[0].price.toString().convertToCurrencyFormat() else uiState.price.toString().convertToCurrencyFormat(),
                     onNewValue = viewModel::onPriceChange,
                     modifier = Modifier,
                     placeholder = "Masukan berat sampah",

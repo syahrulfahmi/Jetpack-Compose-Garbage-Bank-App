@@ -1,5 +1,9 @@
 package com.app.pbn.constant
 
+object EXTRA {
+    const val DATA = "data"
+}
+
 object Util {
     const val PAGE = "page"
 }

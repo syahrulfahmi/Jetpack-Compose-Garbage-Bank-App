@@ -49,6 +49,11 @@
             android:windowSoftInputMode="adjustResize"
             tools:ignore="LockedOrientationActivity" />
         <activity
+            android:name=".ui.page.garbagetype.InputGarbageTypeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="LockedOrientationActivity" />
+        <activity
             android:name=".ui.page.history.HistoryActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
