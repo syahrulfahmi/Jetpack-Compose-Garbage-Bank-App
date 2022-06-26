@@ -6,7 +6,7 @@ import com.app.pbn.model.TrashTypeModel
 
 interface StorageService {
     fun savePickUpTrash(trashModel: TrashModel, onResult: (Throwable?) -> Unit)
-    fun saveTrashType(trasyTypeModel: TrashTypeModel, onResult: (Throwable?) -> Unit)
+    fun saveTrashType(trashTypeModel: TrashTypeModel, onResult: (Throwable?) -> Unit)
     fun getTrashType(onFailure: (Throwable?) -> Unit, onSuccess: (List<TrashTypeModel>) -> Unit)
     fun getHistory(userEmail: String, onFailure: (Throwable?) -> Unit, onSuccess: (List<TrashHistory>) -> Unit)
     fun getHistoryPickUp(acceptedBy: String, onFailure: (Throwable?) -> Unit, onSuccess: (List<TrashHistory>) -> Unit)

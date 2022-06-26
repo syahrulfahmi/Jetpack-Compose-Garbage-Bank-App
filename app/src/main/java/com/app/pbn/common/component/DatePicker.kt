@@ -15,6 +15,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.app.pbn.R
 import com.app.pbn.common.ext.fieldModifier
@@ -46,9 +47,9 @@ fun ShowDatePicker(context: Context, onChangeValue: (String) -> Unit) {
             .padding(horizontal = 16.dp)
             .wrapContentSize(Alignment.TopStart),
     ) {
-        Column() {
+        Column {
             TextBold(
-                text = "Tanggal Penjemputan",
+                text = stringResource(R.string.pickup_date),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(top = 16.dp),

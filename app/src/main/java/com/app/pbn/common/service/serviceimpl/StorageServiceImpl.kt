@@ -20,11 +20,11 @@ class StorageServiceImpl @Inject constructor() : StorageService {
             .addOnCompleteListener { onResult(it.exception) }
     }
 
-    override fun saveTrashType(trasyTypeModel: TrashTypeModel, onResult: (Throwable?) -> Unit) {
+    override fun saveTrashType(trashTypeModel: TrashTypeModel, onResult: (Throwable?) -> Unit) {
         Firebase.firestore
             .collection(TRASH_TYPE)
-            .document(trasyTypeModel.id)
-            .set(trasyTypeModel)
+            .document(trashTypeModel.id)
+            .set(trashTypeModel)
             .addOnCompleteListener { onResult(it.exception) }
     }
 

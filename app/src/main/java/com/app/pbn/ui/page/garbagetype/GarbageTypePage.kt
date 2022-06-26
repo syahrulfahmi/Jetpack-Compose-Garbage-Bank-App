@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.app.pbn.R
@@ -32,7 +33,7 @@ fun GarbageTypePage(isAdmin: Boolean, viewModel: GarbageTypeViewModel, doOnBackP
         TopAppBar(
             title = {
                 Text(
-                    text = "Jenis Sampah",
+                    text = stringResource(R.string.trash_type),
                     color = colorResource(id = R.color.black),
                     style = MaterialTheme.typography.body1,
                     fontWeight = FontWeight.Bold,
@@ -57,7 +58,7 @@ fun GarbageTypePage(isAdmin: Boolean, viewModel: GarbageTypeViewModel, doOnBackP
             Ticker("${item.name} : ${item.price}/kg")
         }
         if (isAdmin) {
-            ButtonPrimary(buttonText = "Tambah Data Sampah", modifier = Modifier.buttonModifier()) {
+            ButtonPrimary(buttonText = stringResource(R.string.add_trash_data), modifier = Modifier.buttonModifier()) {
                 doOnAddData.invoke()
             }
         }

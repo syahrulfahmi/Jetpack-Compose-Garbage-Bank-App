@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,9 +37,9 @@ fun HomePageAdmin(userData: UserModel, doOnGarbageTypeClick: () -> Unit, doOnHis
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column() {
+            Column {
                 Text(
-                    text = "Selamat Datang Admin",
+                    text = stringResource(R.string.welcome_admin),
                     fontSize = dimensionResource(id = R.dimen.font_18).value.sp
                 )
                 Text(
@@ -75,7 +76,8 @@ fun HomePageAdmin(userData: UserModel, doOnGarbageTypeClick: () -> Unit, doOnHis
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Bank Sampah Palembon", fontSize = dimensionResource(id = R.dimen.font_20).value.sp,
+                        text = stringResource(id = R.string.app_name),
+                        fontSize = dimensionResource(id = R.dimen.font_20).value.sp,
                         fontWeight = FontWeight.Bold
                     )
                     Text(
@@ -84,7 +86,7 @@ fun HomePageAdmin(userData: UserModel, doOnGarbageTypeClick: () -> Unit, doOnHis
                                 end = dimensionResource(id = R.dimen.padding_16),
                                 top = dimensionResource(id = R.dimen.padding_8)
                             ),
-                        text = "Sampah merupakan hasil produksi manusia yang tidak akan pernah luput dari kehidupan sehari-hari. Lalu, jenis-jenis sampah apa yang biasanya kita hasilkan? Yuk, kenali di sini."
+                        text = stringResource(R.string.trash_description)
                     )
                 }
                 Image(
@@ -96,7 +98,7 @@ fun HomePageAdmin(userData: UserModel, doOnGarbageTypeClick: () -> Unit, doOnHis
                 )
             }
         }
-        TextBold(text = "Kategori Menu", modifier = Modifier.fullTextWidth(), fontSize = R.dimen.font_18)
+        TextBold(text = stringResource(R.string.menu_category), modifier = Modifier.fullTextWidth(), fontSize = R.dimen.font_18)
         Row(
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -128,7 +130,7 @@ fun HomePageAdmin(userData: UserModel, doOnGarbageTypeClick: () -> Unit, doOnHis
                         contentDescription = null
                     )
                     Text(
-                        text = "Jenis Sampah"
+                        text = stringResource(id = R.string.trash_type)
                     )
 
                 }
@@ -157,7 +159,7 @@ fun HomePageAdmin(userData: UserModel, doOnGarbageTypeClick: () -> Unit, doOnHis
                         contentDescription = null
                     )
                     Text(
-                        text = "Order & Riwayat"
+                        text = stringResource(id = R.string.trash_order_history)
                     )
                 }
             }

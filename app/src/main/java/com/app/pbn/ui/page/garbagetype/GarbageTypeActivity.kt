@@ -2,7 +2,6 @@ package com.app.pbn.ui.page.garbagetype
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -27,7 +26,6 @@ class GarbageTypeActivity : ComponentActivity() {
 
         setContent {
             BankSampahPalembonTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                     GarbageTypePage(isAdmin, viewModel,
                     doOnBackPressed = {

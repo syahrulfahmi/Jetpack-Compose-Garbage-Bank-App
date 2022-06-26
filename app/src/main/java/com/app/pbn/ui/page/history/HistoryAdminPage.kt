@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,7 +38,7 @@ fun HistoryAdminPage(viewModel: HistoryViewModel, isAdmin: Boolean, doOnBackPres
         TopAppBar(
             title = {
                 Text(
-                    text = "Order & Riwayat",
+                    text = stringResource(R.string.trash_order_history),
                     color = colorResource(id = R.color.black),
                     style = MaterialTheme.typography.body1,
                     fontWeight = FontWeight.Bold,
@@ -61,13 +62,13 @@ fun HistoryAdminPage(viewModel: HistoryViewModel, isAdmin: Boolean, doOnBackPres
         LazyColumn {
             item {
                 Spacer(modifier = Modifier.height(18.dp))
-                TextBold(text = "Daftar Permintaan", modifier = Modifier.fullTextWidth(), fontSize = R.dimen.font_18)
+                TextBold(text = stringResource(R.string.request_list), modifier = Modifier.fullTextWidth(), fontSize = R.dimen.font_18)
             }
 
             if (requestUiState.value.isEmpty()) {
                 item {
                     TextBold(
-                        text = "Belum ada Permintaan",
+                        text = stringResource(R.string.nothing_request),
                         modifier = Modifier.fullTextWidth(),
                         fontSize = R.dimen.font_20
                     )
@@ -84,7 +85,7 @@ fun HistoryAdminPage(viewModel: HistoryViewModel, isAdmin: Boolean, doOnBackPres
             }
 
             item {
-                TextBold(text = "Riwayat", modifier = Modifier.fullTextWidth(), fontSize = R.dimen.font_18)
+                TextBold(text = stringResource(R.string.history), modifier = Modifier.fullTextWidth(), fontSize = R.dimen.font_18)
             }
 
             if (uiState.value.isNotEmpty()) {
@@ -94,7 +95,7 @@ fun HistoryAdminPage(viewModel: HistoryViewModel, isAdmin: Boolean, doOnBackPres
             } else {
                 item {
                     TextBold(
-                        text = "Belum ada riwayat",
+                        text = stringResource(R.string.nothing_history),
                         modifier = Modifier.fullTextWidth(),
                         fontSize = R.dimen.font_20
                     )
@@ -120,81 +121,6 @@ fun HistoryAdminPage(viewModel: HistoryViewModel, isAdmin: Boolean, doOnBackPres
                 },
                 onDismissRequest = { viewModel.isShowDialog.value = false }
             )
-        }
-    }
-}
-
-
-@Composable
-fun CardRequestPickUp(data: TrashHistory, doOnUpdate: (String, Int) -> Unit) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        shape = RoundedCornerShape(10.dp),
-        elevation = 4.dp
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = data.name,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-            Text(
-                modifier = Modifier.fullTextWidth(),
-                text = data.date,
-                fontSize = 14.sp
-            )
-            Text(
-                modifier = Modifier.fullTextWidth(),
-                text = "Berat : ${data.weight} Kg",
-                fontSize = 14.sp,
-            )
-            Row(
-                modifier = Modifier.fieldModifier(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.weight(1f),
-                    text = data.category,
-                    fontSize = 14.sp,
-                )
-                Text(
-                    modifier = Modifier.weight(1f),
-                    textAlign = TextAlign.End,
-                    fontWeight = FontWeight.Bold,
-                    text = "Harga: ${data.weight?.times(data.price).toString().convertToCurrencyFormat()}",
-                    fontSize = 14.sp,
-                )
-            }
-            Row(
-                modifier = Modifier.fieldModifier(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                ButtonDanger(buttonText = "Tolak", modifier = Modifier.weight(1f)) {
-                    doOnUpdate(data.id, 2)
-                }
-                Spacer(modifier = Modifier.width(16.dp))
-                ButtonPrimary(buttonText = "Konfirmasi", modifier = Modifier.weight(1f)) {
-                    doOnUpdate(data.id, 1)
-                }
-            }
         }
     }
 }

@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.app.pbn.R
 import com.app.pbn.common.ext.buttonModifier
 
-@Composable()
+@Composable
 fun ButtonPrimary(buttonText: String, modifier: Modifier, doOnClick: () -> Unit) {
     Button(
         modifier = modifier,
@@ -28,7 +28,7 @@ fun ButtonPrimary(buttonText: String, modifier: Modifier, doOnClick: () -> Unit)
     }
 }
 
-@Composable()
+@Composable
 fun ButtonDanger(buttonText: String, modifier: Modifier, doOnClick: () -> Unit) {
     Button(
         modifier = modifier,

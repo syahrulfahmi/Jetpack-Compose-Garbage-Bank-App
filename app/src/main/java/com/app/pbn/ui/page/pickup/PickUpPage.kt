@@ -1,18 +1,16 @@
 package com.app.pbn.ui.page.pickup
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,20 +18,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.app.pbn.R
 import com.app.pbn.common.component.*
 import com.app.pbn.common.ext.buttonModifier
-import com.app.pbn.common.ext.convertToCurrencyFormat
 import com.app.pbn.common.ext.fieldModifier
 import com.app.pbn.common.ext.fullTextWidth
-import com.app.pbn.constant.Constant
-import com.app.pbn.model.TrashModel
-import com.app.pbn.model.TrashTypeModel
 
 @Composable
 fun PickUpPage(viewModel: PickUpViewModel, doOnBack: () -> Unit, doOnSave: () -> Unit) {
@@ -48,7 +42,7 @@ fun PickUpPage(viewModel: PickUpViewModel, doOnBack: () -> Unit, doOnSave: () ->
         TopAppBar(
             title = {
                 Text(
-                    text = "Jemput Sampah",
+                    text = stringResource(id = R.string.pickup_trash),
                     color = colorResource(id = R.color.black),
                     style = MaterialTheme.typography.body1,
                     fontWeight = FontWeight.Bold,
@@ -90,41 +84,56 @@ fun PickUpPage(viewModel: PickUpViewModel, doOnBack: () -> Unit, doOnSave: () ->
                 )
                 Text(
                     modifier = Modifier.padding(start = dimensionResource(id = R.dimen.padding_8)),
-                    text = "Mohon isi data di bawah ini dengan benar",
+                    text = stringResource(id = R.string.please_input_data_corectly),
                     color = colorResource(id = R.color.white)
                 )
             }
         }
         Spacer(modifier = Modifier.height(18.dp))
+
+        // FIELD INPUT USER NAME
         TextBold(
-            text = "Nama Pengguna", modifier = Modifier
+            text = stringResource(R.string.user_name), modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             fontSize = R.dimen.font_14
         )
-        BasicField(uiState.value.name, viewModel::onUserNameChange, Modifier.fieldModifier(), "Masukan nama lengkap")
+        BasicField(uiState.value.name, viewModel::onUserNameChange, Modifier.fieldModifier(), stringResource(R.string.placeholder_input_user_name))
+
+        // FIELD INPUT CATEGORY
         DropdownDemo(trashList) {
             viewModel.onCategoryChange(it.name)
             viewModel.onPriceChange(it.price.toString())
         }
+
+        // FIELD INPUT BERAT DAN HARGA
         WeightAndPrice(uiState = uiState.value, viewModel = viewModel, trashList)
+
+        // FIELD INPUT TANGGAL
         ShowDatePicker(context = LocalContext.current, viewModel::onDatesChange)
+
+        // FIELD INPUT ALAMAT
         TextBold(
-            text = "Alamat", modifier = Modifier
+            text = stringResource(R.string.address), modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             fontSize = R.dimen.font_14
         )
-        BasicField(uiState.value.address, viewModel::onAddressChange, Modifier.fieldModifier(), "Masukan alamat")
+        BasicField(uiState.value.address, viewModel::onAddressChange, Modifier.fieldModifier(), stringResource(R.string.placeholder_input_address))
+
+
+        // FIELD INPUT CATATAN
         TextBold(
-            text = "Catatan Tambahan (Optional)", modifier = Modifier
+            text = stringResource(R.string.notes), modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 16.dp, start = 16.dp, end = 16.dp),
             fontSize = R.dimen.font_14
         )
-        BasicField(uiState.value.notes, viewModel::onNotesChange, Modifier.fieldModifier(), "Masukan catatan tambahan")
+        BasicField(uiState.value.notes, viewModel::onNotesChange, Modifier.fieldModifier(), stringResource(R.string.placeholder_input_notes))
         Spacer(modifier = Modifier.padding(top = 16.dp))
-        ButtonPrimary(buttonText = "Jemput Sampah ", modifier = Modifier.buttonModifier()) {
+
+        // BUTTON SAVE
+        ButtonPrimary(buttonText = stringResource(id = R.string.pickup_trash), modifier = Modifier.buttonModifier()) {
             doOnSave.invoke()
         }
         Spacer(modifier = Modifier.height(18.dp))
@@ -148,117 +157,6 @@ fun PickUpPage(viewModel: PickUpViewModel, doOnBack: () -> Unit, doOnSave: () ->
                 },
                 onDismissRequest = { viewModel.isShowDialogError.value = false }
             )
-        }
-    }
-}
-
-@Composable
-fun WeightAndPrice(uiState: TrashModel, viewModel: PickUpViewModel, items: State<ArrayList<TrashTypeModel>>) {
-    Row(
-        modifier = Modifier.fieldModifier(),
-        horizontalArrangement = Arrangement.SpaceBetween
-    ) {
-        Column(modifier = Modifier.weight(1f)) {
-            TextBold(
-                text = "Berat Sampah (Kg)", modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                fontSize = R.dimen.font_14
-            )
-            BasicField(
-                value = if (uiState.weight == Constant.ZERO_VALUE) Constant.EMPTY_STRING else uiState.weight.toString(),
-                onNewValue = viewModel::onWeightChange,
-                modifier = Modifier,
-                placeholder = "Masukan berat sampah",
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-        }
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            TextBold(
-                text = "Harga per (Kg)", modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 16.dp),
-                fontSize = R.dimen.font_14
-            )
-            if (items.value.isNotEmpty()) {
-                BasicField(
-                    value = if (uiState.price == Constant.ZERO_VALUE) items.value[0].price.toString().convertToCurrencyFormat() else uiState.price.toString().convertToCurrencyFormat(),
-                    onNewValue = viewModel::onPriceChange,
-                    modifier = Modifier,
-                    placeholder = "Masukan berat sampah",
-                    isEnabled = false
-                )
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@Composable
-fun DropdownDemo(items: State<ArrayList<TrashTypeModel>>, doOnItemClick: (TrashTypeModel) -> Unit) {
-    if (items.value.isNotEmpty()) {
-        var expanded by remember { mutableStateOf(false) }
-        var selectedIndex by remember { mutableStateOf(0) }
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp)
-                .wrapContentSize(Alignment.TopStart),
-        ) {
-            Column(
-                modifier = Modifier.fillMaxWidth()
-            ) {
-                TextBold(
-                    text = "Kategori Sampah",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 16.dp),
-                    fontSize = R.dimen.font_14
-                )
-                Card(
-                    shape = RoundedCornerShape(10.dp),
-                    modifier = Modifier.padding(top = 8.dp),
-                    border = BorderStroke(1.dp, MaterialTheme.colors.onSurface),
-                    backgroundColor = Color.White,
-                    onClick = {
-                        expanded = true
-                    },
-                ) {
-                    Row(
-                        modifier = Modifier
-                            .fieldModifier()
-                            .padding(vertical = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = items.value[selectedIndex].name,
-                        )
-                        Icon(
-                            imageVector = Icons.Filled.ArrowDropDown,
-                            contentDescription = "Back",
-                            tint = Color.Black
-                        )
-                    }
-                }
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false },
-                ) {
-                    items.value.forEachIndexed { index, item ->
-                        DropdownMenuItem(
-                            modifier = Modifier.fillMaxWidth(),
-                            onClick = {
-                                doOnItemClick.invoke(item)
-                                selectedIndex = index
-                                expanded = false
-                            }) {
-                            Text(text = item.name)
-                        }
-                    }
-                }
-            }
         }
     }
 }

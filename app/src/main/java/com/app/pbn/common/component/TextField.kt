@@ -64,7 +64,7 @@ fun EmailField(value: String, onNewValue: (String) -> Unit, modifier: Modifier =
         value = value,
         shape = RoundedCornerShape(10.dp),
         onValueChange = { onNewValue(it) },
-        placeholder = { Text(stringResource(AppText.user_name)) },
+        placeholder = { Text(stringResource(AppText.email)) },
         leadingIcon = { Icon(imageVector = Icons.Default.Email, contentDescription = "Email") },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
     )

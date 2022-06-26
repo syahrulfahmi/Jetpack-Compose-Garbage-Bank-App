@@ -18,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -45,7 +46,7 @@ fun InputGarbageTypePage(viewModel: GarbageTypeViewModel, doOnInputClick: () -> 
         TopAppBar(
             title = {
                 Text(
-                    text = "Jemput Sampah",
+                    text = stringResource(R.string.pickup_trash),
                     color = colorResource(id = R.color.black),
                     style = MaterialTheme.typography.body1,
                     fontWeight = FontWeight.Bold,
@@ -87,7 +88,7 @@ fun InputGarbageTypePage(viewModel: GarbageTypeViewModel, doOnInputClick: () -> 
                 )
                 Text(
                     modifier = Modifier.padding(start = dimensionResource(id = R.dimen.padding_8)),
-                    text = "Mohon isi data di bawah ini dengan benar",
+                    text = stringResource(R.string.please_input_data_corectly),
                     color = colorResource(id = R.color.white)
                 )
             }
@@ -99,7 +100,7 @@ fun InputGarbageTypePage(viewModel: GarbageTypeViewModel, doOnInputClick: () -> 
             value = if (uiState.value.price == Constant.ZERO_VALUE) Constant.EMPTY_STRING else uiState.value.price.toString(),
             modifier = Modifier.fieldModifier(),
             onNewValue = viewModel::onPriceChange,
-            placeholder = "Masukan harga sampah per (kg)"
+            placeholder = stringResource(R.string.placeholder_trash_per_kg)
         )
 
         ButtonPrimary("Tambah", modifier = Modifier.buttonModifier()) {

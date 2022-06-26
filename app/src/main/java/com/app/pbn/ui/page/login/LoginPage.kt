@@ -71,7 +71,7 @@ fun LoginPage(viewModel: LoginViewModel, doOnRegisterClick: () -> Unit, doOnLogi
             append(stringResource(R.string.belum_memiliki_akun))
             pushStringAnnotation(
                 tag = Util.PAGE,
-                annotation = "https://developer.android.com"
+                annotation = "Daftar"
             )
             withStyle(
                 style = SpanStyle(

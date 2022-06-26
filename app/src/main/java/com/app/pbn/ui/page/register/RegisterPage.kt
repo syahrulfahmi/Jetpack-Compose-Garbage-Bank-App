@@ -8,11 +8,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AlertDialog
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -78,7 +74,7 @@ fun RegisterPage(viewModel: RegisterViewModel, doOnLoginClick: () -> Unit, doOnR
             append(stringResource(R.string.sudah_memiliki_akun))
             pushStringAnnotation(
                 tag = Util.PAGE,
-                annotation = "https://developer.android.com"
+                annotation = "daftar"
             )
             withStyle(
                 style = SpanStyle(

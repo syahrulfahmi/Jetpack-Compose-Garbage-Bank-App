@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">Bank Sampah Palembon</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
-    <string name="user_name">Email</string>
+    <string name="email">Email</string>
     <string name="name">Nama Lengkap</string>
     <string name="pasword">Kata Sandi</string>
     <string name="masuk">Masuk</string>
@@ -17,4 +13,29 @@
     <string name="email_error">Please insert a valid email.</string>
     <string name="password_match_error">Passwords do not match.</string>
     <string name="ok">OK</string>
+    <string name="pickup_date">Tanggal Penjemputan</string>
+    <string name="trash_type">Jenis Sampah</string>
+    <string name="add_trash_data">Tambah Data Sampah</string>
+    <string name="pickup_trash">Jemput Sampah</string>
+    <string name="please_input_data_corectly">Mohon isi data di bawah ini dengan benar</string>
+    <string name="placeholder_trash_per_kg">Masukan harga sampah per (kg)</string>
+    <string name="trash_order_history"><![CDATA[Order & Riwayat]]></string>
+    <string name="request_list">Daftar Permintaan</string>
+    <string name="nothing_request">Belum ada Permintaan</string>
+    <string name="history">Riwayat</string>
+    <string name="nothing_history">Belum ada riwayat</string>
+    <string name="reject">Tolak</string>
+    <string name="confirm">Konfirmasi</string>
+    <string name="balance_history"><![CDATA[Saldo & Riwayat]]></string>
+    <string name="your_balance">Saldo Anda</string>
+    <string name="welcome_admin">Selamat Datang Admin</string>
+    <string name="trash_description">Sampah merupakan hasil produksi manusia yang tidak akan pernah luput dari kehidupan sehari-hari. Lalu, jenis-jenis sampah apa yang biasanya kita hasilkan? Yuk, kenali di sini.</string>
+    <string name="menu_category">Kategori Menu</string>
+    <string name="welcome">Selamat Datang</string>
+    <string name="user_name">Nama Pengguna</string>
+    <string name="placeholder_input_user_name">Masukan nama lengkap</string>
+    <string name="address">Alamat</string>
+    <string name="placeholder_input_address">Masukan alamat</string>
+    <string name="notes">Catatan Tambahan (Optional)</string>
+    <string name="placeholder_input_notes">Masukan catatan tambahan</string>
 </resources>

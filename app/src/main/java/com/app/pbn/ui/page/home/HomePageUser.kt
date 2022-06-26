@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,9 +37,9 @@ fun HomePageUser(userData: UserModel, doOnPickUpClick: () -> Unit, doOnGarbageTy
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column() {
+            Column {
                 Text(
-                    text = "Selamat Datang",
+                    text = stringResource(R.string.welcome),
                     fontSize = dimensionResource(id = R.dimen.font_18).value.sp
                 )
                 Text(
@@ -73,7 +74,7 @@ fun HomePageUser(userData: UserModel, doOnPickUpClick: () -> Unit, doOnGarbageTy
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Text(
-                        text = "Bank Sampah Palembon",
+                        text = stringResource(id = R.string.app_name),
                         fontSize = dimensionResource(id = R.dimen.font_20).value.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -83,7 +84,7 @@ fun HomePageUser(userData: UserModel, doOnPickUpClick: () -> Unit, doOnGarbageTy
                                 end = dimensionResource(id = R.dimen.padding_16),
                                 top = dimensionResource(id = R.dimen.padding_8)
                             ),
-                        text = "Sampah merupakan hasil produksi manusia yang tidak akan pernah luput dari kehidupan sehari-hari. Lalu, jenis-jenis sampah apa yang biasanya kita hasilkan? Yuk, kenali di sini."
+                        text = stringResource(R.string.trash_description)
                     )
                 }
                 Image(
@@ -95,7 +96,7 @@ fun HomePageUser(userData: UserModel, doOnPickUpClick: () -> Unit, doOnGarbageTy
                 )
             }
         }
-        TextBold(text = "Kategori Menu", Modifier.fullTextWidth(), fontSize = R.dimen.font_18)
+        TextBold(text = stringResource(id = R.string.menu_category), Modifier.fullTextWidth(), fontSize = R.dimen.font_18)
         Row(
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -127,7 +128,7 @@ fun HomePageUser(userData: UserModel, doOnPickUpClick: () -> Unit, doOnGarbageTy
                         contentDescription = null
                     )
                     Text(
-                        text = "Jemput Sampah"
+                        text = stringResource(id = R.string.pickup_trash)
                     )
 
                 }
@@ -158,7 +159,7 @@ fun HomePageUser(userData: UserModel, doOnPickUpClick: () -> Unit, doOnGarbageTy
                         contentDescription = null
                     )
                     Text(
-                        text = "Jenis Sampah"
+                        text = stringResource(id = R.string.trash_type)
                     )
                 }
             }
@@ -190,7 +191,7 @@ fun HomePageUser(userData: UserModel, doOnPickUpClick: () -> Unit, doOnGarbageTy
                         .padding(
                             top = dimensionResource(id = R.dimen.padding_8)
                         ),
-                    text = "Saldo & Riwayat"
+                    text = stringResource(id = R.string.balance_history)
                 )
             }
         }

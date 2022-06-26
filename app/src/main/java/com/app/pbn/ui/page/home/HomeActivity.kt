@@ -35,7 +35,6 @@ class HomeActivity : ComponentActivity() {
 
         setContent {
             BankSampahPalembonTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colors.background) {
                     val uiState by viewModel.uiState
                     HomePage(
